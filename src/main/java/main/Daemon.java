@@ -57,11 +57,32 @@ public class Daemon {
     public void run() {
 
         JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(IOUtils.toString(getClass().getClassLoader().getResourceAsStream("config.json")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            jsonObject = new JSONObject(IOUtils.toString(getClass().getClassLoader().getResourceAsStream("config.json")));
+            jsonObject = new JSONObject("{\n" +
+                    "    \"name\": \"Netstats Analyzer\",\n" +
+                    "    \"version\": 1.0,\n" +
+                    "    \"configure\": {\n" +
+                    "        \"general\": {\n" +
+                    "            \"sandbox\": true\n" +
+                    "        },\n" +
+                    "        \"mongo\": {\n" +
+                    "            \"ip\": \"netstatspucmm.com\",\n" +
+                    "            \"port\": 27017,\n" +
+                    "            \"database\": \"netstats\",\n" +
+                    "            \"collection\": {\n" +
+                    "                \"principal\": \"organizations\",\n" +
+                    "                \"personal\": \"staffs\",\n" +
+                    "                \"account\": \"accounts\",\n" +
+                    "                \"dataSniffer\": \"datas\",\n" +
+                    "                \"networkData\": \"sniffers\"\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         configureMongo(jsonObject, false);
         login();
