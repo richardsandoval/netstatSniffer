@@ -1,0 +1,21 @@
+{
+    "name": "Netstats Analyzer",
+    "version": 1.0,
+    "configure": {
+        "general": {
+            "sandbox": true
+        },
+        "mongo": {
+            "ip": "netstatspucmm.com",
+            "port": 27017,
+            "database": "netstats",
+            "collection": {
+                "principal": "organizations",
+                "personal": "staffs",
+                "account": "accounts",
+                "dataSniffer": "datas",
+                "networkData": "sniffers"
+            }
+        }
+    }
+}
