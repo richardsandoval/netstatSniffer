@@ -37,7 +37,6 @@ public class Daemon {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-
     static List<PcapIf> devices = new ArrayList<>();
     static List<Sniffer> sniffs = new ArrayList<>();
     static CopyOnWriteArrayList<CustomPacket> packets = new CopyOnWriteArrayList<>();
@@ -57,32 +56,11 @@ public class Daemon {
     public void run() {
 
         JSONObject jsonObject = null;
-//        try {
-//            jsonObject = new JSONObject(IOUtils.toString(getClass().getClassLoader().getResourceAsStream("config.json")));
-            jsonObject = new JSONObject("{\n" +
-                    "    \"name\": \"Netstats Analyzer\",\n" +
-                    "    \"version\": 1.0,\n" +
-                    "    \"configure\": {\n" +
-                    "        \"general\": {\n" +
-                    "            \"sandbox\": true\n" +
-                    "        },\n" +
-                    "        \"mongo\": {\n" +
-                    "            \"ip\": \"netstatspucmm.com\",\n" +
-                    "            \"port\": 27017,\n" +
-                    "            \"database\": \"netstats\",\n" +
-                    "            \"collection\": {\n" +
-                    "                \"principal\": \"organizations\",\n" +
-                    "                \"personal\": \"staffs\",\n" +
-                    "                \"account\": \"accounts\",\n" +
-                    "                \"dataSniffer\": \"datas\",\n" +
-                    "                \"networkData\": \"sniffers\"\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "    }\n" +
-                    "}");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            jsonObject = new JSONObject(IOUtils.toString(getClass().getClassLoader().getResourceAsStream("config.json")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         configureMongo(jsonObject, false);
         login();
@@ -211,6 +189,7 @@ public class Daemon {
         analysis.append("_id", new ObjectId())
                 .append("dataId", data.getObjectId("_id"))
                 .append("timestamp", new BasicDBObject("date", new Date()));
+
         try {
             if (packet.hasEth()) {
                 analysis.append("sMAC", packet.getMacSrc());

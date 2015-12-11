@@ -1,6 +1,5 @@
 package packet;
 
-import org.bson.Document;
 import org.jnetpcap.packet.Payload;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.protocol.application.Html;
@@ -57,7 +56,7 @@ public class CustomPacket {
                 prefix = "-";
                 sb.append(String.format("%02X", b));
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
@@ -77,9 +76,7 @@ public class CustomPacket {
     }
 
     public boolean isIPFragment() {
-        if (!this.hasIp())
-            return false;
-        return this.headIp.isFragment();
+        return this.hasIp() && this.headIp.isFragment();
     }
 
     public int getUdpSrc() {
