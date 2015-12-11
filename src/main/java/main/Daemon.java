@@ -37,9 +37,10 @@ public class Daemon {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    static long id = 0;
     static List<PcapIf> devices = new ArrayList<>();
     static List<Sniffer> sniffs = new ArrayList<>();
-    static CopyOnWriteArrayList<CustomPacket> packets = new CopyOnWriteArrayList<>();
+//    static CopyOnWriteArrayList<CustomPacket> packets = new CopyOnWriteArrayList<>();
     static MongoClient client;
     static MongoDatabase database;
     public MongoCollection<Document> organizations;
@@ -179,7 +180,7 @@ public class Daemon {
     }
 
     public static void registerPacket(CustomPacket packet) {
-        packets.add(packet);
+//        packets.add(packet);
         updatePacketCount();
         addMongoDocument(packet);
     }
@@ -237,7 +238,7 @@ public class Daemon {
     }
 
     private synchronized static void updatePacketCount() {
-        out.println(ANSI_CYAN + "Packet Found: " + packets.size() + ANSI_RESET);
+        out.println(ANSI_CYAN + "Packet Found: " + ++id + ANSI_RESET);
     }
 
     public static void main(String... args) {
